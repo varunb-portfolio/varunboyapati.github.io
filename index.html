@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Portfolio of Varun Boyapati, Senior Data Engineer: AWS, Databricks, PySpark, Redshift.">
+<title>Varun Boyapati Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column, 1080px max. Hero with a medallion pipeline diagram (Sources > Bronze > Silver > Gold > Serving) as the single bold element; everything else stays quiet. */
+:root {
+  --bg: #F5F7F4;
+  --surface: #FFFFFF;
+  --fg: #14201C;
+  --muted: #53625C;
+  --line: #D8DFDA;
+  --accent: #0B6B5A;
+  --bronze: #9A5420;
+  --silver: #5F6B7A;
+  --gold: #8F6A00;
+  --on-layer: #FFFFFF;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1513; --surface: #161E1B; --fg: #E8EEEA; --muted: #9AA8A2; --line: #2A3531;
+    --accent: #5CCFB5; --bronze: #D08A4E; --silver: #A9B3C1; --gold: #E3B93C; --on-layer: #15130E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1513; --surface: #161E1B; --fg: #E8EEEA; --muted: #9AA8A2; --line: #2A3531;
+  --accent: #5CCFB5; --bronze: #D08A4E; --silver: #A9B3C1; --gold: #E3B93C; --on-layer: #15130E;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-inline: 20px;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1080px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.1; margin: 0; }
+.mono { font-family: var(--font-mono); }
+.label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* top bar */
+.bar { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: baseline; padding-block: 22px; border-bottom: 1px solid var(--line); }
+.bar .name { font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.bar nav { display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 14px; }
+.bar nav a { color: var(--muted); text-decoration: none; }
+.bar nav a:hover { color: var(--fg); text-decoration: underline; }
+
+/* hero */
+.hero { padding-block: 56px 40px; display: grid; gap: 28px; }
+.hero h1 { font-size: clamp(2.6rem, 8vw, 5rem); font-weight: 700; letter-spacing: -0.02em; }
+.hero .jobtitle { font-family: var(--font-display); font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 500; color: var(--accent); margin-top: 8px; }
+.hero p.lead { max-width: 62ch; font-size: 1.1rem; margin: 0; color: var(--fg); }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 36px; }
+.facts div { min-width: 0; }
+.facts b { display: block; font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+.facts span { font-size: 13px; color: var(--muted); }
+
+/* pipeline */
+.pipe { padding-block: 8px 56px; }
+.pipe .label { margin-bottom: 14px; display: block; }
+.stages { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 30px; }
+.stage { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 2px; padding: 14px 14px 16px; min-width: 0; }
+.stage:not(:last-child)::after { content: "\2192"; position: absolute; right: -24px; top: 50%; transform: translateY(-50%); color: var(--muted); font-family: var(--font-mono); font-size: 18px; }
+.chip { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; background: var(--muted); color: var(--bg); }
+.chip.bronze { background: var(--bronze); color: var(--on-layer); }
+.chip.silver { background: var(--silver); color: var(--on-layer); }
+.chip.gold { background: var(--gold); color: var(--on-layer); }
+.chip.plain { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+.stage h3 { font-size: 1.05rem; margin: 10px 0 4px; font-weight: 700; }
+.stage p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+
+/* sections */
+section { padding-block: 56px; border-top: 1px solid var(--line); }
+section > .wrap > h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 700; margin-bottom: 28px; }
+
+/* experience timeline (reverse-chronological) */
+.role { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 8px 32px; padding-block: 26px; border-bottom: 1px solid var(--line); }
+.role:first-of-type { padding-top: 0; }
+.role:last-of-type { border-bottom: 0; }
+.role .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); line-height: 1.5; }
+.role h3 { font-size: 1.3rem; font-weight: 700; }
+.role .org { color: var(--muted); font-size: 15px; margin: 4px 0 12px; }
+.role ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; max-width: 70ch; }
+.role li::marker { color: var(--muted); }
+.note { display: inline-block; margin-top: 12px; font-size: 13.5px; font-family: var(--font-mono); color: var(--gold); }
+
+/* projects */
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; }
+.proj { background: var(--surface); border: 1px solid var(--line); border-radius: 2px; padding: 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.proj h3 { font-size: 1.25rem; font-weight: 700; }
+.proj .dom { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.proj ul { margin: 0; padding-left: 1.1em; display: grid; gap: 7px; font-size: 14.5px; }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 4px; }
+.stack span { font-family: var(--font-mono); font-size: 11.5px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 0 48px; margin: 0; }
+.skills div { padding-block: 16px; border-top: 1px solid var(--line); min-width: 0; }
+.skills dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.skills dd { margin: 0; }
+
+/* education + contact */
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 32px 48px; }
+.two h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.two p { margin: 0 0 6px; max-width: 60ch; }
+.muted { color: var(--muted); }
+.contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-block: 8px; }
+.contact-row code { font-family: var(--font-mono); font-size: 15px; user-select: all; overflow-wrap: anywhere; }
+button.copy { font-family: var(--font-mono); font-size: 12px; padding: 4px 10px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 2px; cursor: pointer; }
+button.copy:hover { border-color: var(--accent); }
+footer { padding-block: 32px 48px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .stages { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .stage:not(:last-child)::after { content: "\2193"; right: auto; left: 18px; top: auto; bottom: -30px; transform: none; }
+  .role { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+body { margin: 0; }
+img { max-width: 100%; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <span class="name">Varun Boyapati</span>
+    <nav aria-label="Sections">
+      <a href="#work">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Varun Boyapati</h1>
+        <div class="jobtitle">Senior Data Engineer</div>
+      </div>
+      <p class="lead">I build ETL and ELT pipelines on AWS and Databricks. They move data from relational databases, APIs and flat files into layered data lakes and Redshift, with incremental loads, reconciliation and data-quality checks built in.</p>
+      <div class="facts">
+        <div><b>4+ years</b><span>Data engineering, analytics and operations</span></div>
+        <div><b>AWS + Azure</b><span>Glue, Redshift, Databricks, Data Factory</span></div>
+        <div><b>MSc Computer Science</b><span>University of East London</span></div>
+        <div><b>Bangalore</b><span>Currently at Cenit Technologies</span></div>
+      </div>
+    </div>
+
+    <div class="pipe" aria-label="How a typical pipeline of mine is laid out">
+      <span class="label">A typical pipeline, left to right</span>
+      <div class="stages">
+        <div class="stage">
+          <span class="chip plain">Sources</span>
+          <h3>Databases, APIs, files</h3>
+          <p>SQL Server, REST APIs, CSV. Change data capture with AWS DMS or watermark columns.</p>
+        </div>
+        <div class="stage">
+          <span class="chip bronze">Bronze / Raw</span>
+          <h3>Land as received</h3>
+          <p>Partitioned Parquet on S3, loaded incrementally with Glue job bookmarks.</p>
+        </div>
+        <div class="stage">
+          <span class="chip silver">Silver / Processed</span>
+          <h3>Clean and conform</h3>
+          <p>PySpark for deduplication, joins and business rules. SCD Type 1 and 2 with Delta MERGE.</p>
+        </div>
+        <div class="stage">
+          <span class="chip gold">Gold / Curated</span>
+          <h3>Ready to report</h3>
+          <p>Reconciled against source, cataloged in Glue Data Catalog.</p>
+        </div>
+        <div class="stage">
+          <span class="chip plain">Serving</span>
+          <h3>Athena, Redshift, BI</h3>
+          <p>Power BI and QuickSight dashboards, watched through CloudWatch and SNS alerts.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section id="work">
+    <div class="wrap" style="padding:0">
+      <h2>Experience</h2>
+
+      <article class="role">
+        <div class="when">Nov 2025 – Present<br>Bangalore, India</div>
+        <div>
+          <h3>Senior Data Engineer</h3>
+          <div class="org">Cenit Technologies Pvt Ltd</div>
+          <ul>
+            <li>Build and maintain Glue (PySpark) pipelines over structured and semi-structured data from databases, APIs, CSV files and enterprise applications.</li>
+            <li>Run a Raw, Processed and Curated lake on S3 with partitioned Parquet, which lowers storage and query cost.</li>
+            <li>Use Glue job bookmarks, partitioning and watermark logic for incremental loads, so jobs skip full reloads and finish sooner.</li>
+            <li>Load curated data into Redshift and expose it through Athena external tables for reporting.</li>
+            <li>Monitor with CloudWatch, find root causes and resolve production issues within agreed SLAs.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">Dec 2024 – Oct 2025</div>
+        <div>
+          <h3>Associate Consultant, Data Engineer</h3>
+          <div class="org">IntouchCX · Operations Analytics</div>
+          <ul>
+            <li>Ingested call, chat, agent and operational data into S3 with Glue and Step Functions.</li>
+            <li>Designed Bronze, Silver and Gold layers with Delta Lake and processed interaction data in PySpark on Databricks and Glue.</li>
+            <li>Built curated datasets for customer experience, agent performance and service-level reporting, served to Power BI through Athena or Redshift.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">Dec 2023 – May 2024<br>London, UK</div>
+        <div>
+          <h3>Data Operations Associate</h3>
+          <div class="org">Mars</div>
+          <ul>
+            <li>Ingested daily sales, stock-movement and warehouse data with Glue into a Delta Lake structure on S3 for demand planning and stock forecasting.</li>
+            <li>Built KPI dashboards in Amazon QuickSight over Gold-layer tables to track inventory levels, replenishment cycles and distribution performance.</li>
+            <li>Reconciled daily transactions in SQL and PySpark to find inventory discrepancies and reduce supply chain waste.</li>
+          </ul>
+          <span class="note">Best Employee of the Operations Team, Jan 2024</span>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">Nov 2022 – Jun 2023<br>London, UK</div>
+        <div>
+          <h3>Data &amp; Operations Coordinator</h3>
+          <div class="org">Just Eat Takeaway.com</div>
+          <ul>
+            <li>Analyzed courier and route dispatch data for a network of 650+ couriers using PySpark and SQL in Databricks on AWS.</li>
+            <li>Built Power BI and QuickSight dashboards on curated S3 tables to monitor SLA compliance, courier performance and delivery metrics.</li>
+            <li>Automated recurring reports and data refreshes with Databricks jobs and Glue workflows.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">Jun 2021 – Jan 2022<br>University of East London</div>
+        <div>
+          <h3>Research Assistant (Internship)</h3>
+          <div class="org">University of East London</div>
+          <ul>
+            <li>Analyzed structured data on professional certifications for academic pathway research.</li>
+            <li>Built proof-of-concept data and compute solutions across AWS, Azure and GCP.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap" style="padding:0">
+      <h2>Projects</h2>
+      <div class="projects">
+        <article class="proj">
+          <div>
+            <h3>AWS Data Lake &amp; Enterprise Analytics Platform</h3>
+            <div class="dom">Enterprise / Retail analytics · Cenit Technologies</div>
+          </div>
+          <ul>
+            <li>Glue PySpark pipelines over databases, APIs, CSV files and enterprise applications.</li>
+            <li>Raw, Processed and Curated layers on S3 in partitioned Parquet.</li>
+            <li>Incremental processing with job bookmarks and watermarks.</li>
+            <li>Spark tuning with predicate pushdown, efficient joins and columnar formats.</li>
+            <li>Lambda utilities for event-driven triggers and file validation.</li>
+          </ul>
+          <div class="stack"><span>Glue</span><span>PySpark</span><span>S3</span><span>Athena</span><span>Redshift</span><span>Lambda</span><span>CloudWatch</span></div>
+        </article>
+
+        <article class="proj">
+          <div>
+            <h3>AWS Lakehouse &amp; Customer Analytics Platform</h3>
+            <div class="dom">Enterprise / Customer analytics · Databricks on AWS</div>
+          </div>
+          <ul>
+            <li>ELT from SQL Server, REST APIs and flat files into S3.</li>
+            <li>Medallion Architecture on Delta Lake, ACID-compliant and reusable.</li>
+            <li>Metadata-driven Glue jobs and Step Functions that onboard new source tables quickly.</li>
+            <li>AWS DMS change data capture for incremental loads.</li>
+            <li>SCD Type 1 and 2 with Delta Lake MERGE, and Dev, QA and Prod deployments through CI/CD.</li>
+          </ul>
+          <div class="stack"><span>Databricks</span><span>Delta Lake</span><span>DMS</span><span>Glue</span><span>Step Functions</span><span>Athena</span><span>Power BI</span><span>SNS</span></div>
+        </article>
+
+        <article class="proj">
+          <div>
+            <h3>Customer Experience &amp; Contact Center Analytics</h3>
+            <div class="dom">Contact center analytics · IntouchCX</div>
+          </div>
+          <ul>
+            <li>Pipelines for call, chat, agent and operational data from databases, APIs and CSV files.</li>
+            <li>Bronze, Silver and Gold layers on S3 with Delta Lake.</li>
+            <li>Curated sets for customer experience, agent performance and service levels.</li>
+            <li>Data-quality checks, source-to-target reconciliation and Spark tuning.</li>
+          </ul>
+          <div class="stack"><span>Glue</span><span>Step Functions</span><span>Databricks</span><span>Delta Lake</span><span>Athena</span><span>Redshift</span><span>Power BI</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap" style="padding:0">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <div><dt>AWS</dt><dd>Glue, Redshift, S3, Athena, Lambda, DynamoDB, EMR, CloudWatch, Step Functions, DMS</dd></div>
+        <div><dt>Azure</dt><dd>Data Factory, Synapse Analytics, Databricks, ADLS Gen2, Azure Functions</dd></div>
+        <div><dt>Pipelines</dt><dd>Apache Airflow, PySpark, Delta Lake, CI/CD with Jenkins, CodePipeline and Azure DevOps</dd></div>
+        <div><dt>Databases</dt><dd>Snowflake, SQL Server, Apache Cassandra, MongoDB</dd></div>
+        <div><dt>Languages</dt><dd>Python, SQL, Java, Bash, YAML, XML</dd></div>
+        <div><dt>Platform</dt><dd>Docker, Kubernetes, Terraform, Git</dd></div>
+        <div><dt>Visualization</dt><dd>Power BI, Tableau, Amazon QuickSight</dd></div>
+        <div><dt>Practice</dt><dd>Data modeling, warehousing, incremental loads, source-to-target reconciliation, data-quality checks</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap" style="padding:0">
+      <div class="two">
+        <div>
+          <h2 style="font-size:1.7rem;margin-bottom:20px">Education</h2>
+          <h3>MSc Computer Science with Industrial Placement</h3>
+          <p>University of East London, UK · Jan 2020 – Jan 2022</p>
+          <p class="muted">Big Data, Cloud Computing, Artificial Intelligence, Advanced Software Engineering</p>
+          <p style="margin-top:16px"><span class="label">Certifications</span><br>Advanced Excel · Power BI Data Analyst · AI Prompt Engineering Frameworks workshop</p>
+        </div>
+        <div>
+          <h2 style="font-size:1.7rem;margin-bottom:20px">Contact</h2>
+          <div class="contact-row">
+            <code id="email">varunboyapati09@gmail.com</code>
+            <button class="copy" type="button" id="copy-email">Copy</button>
+          </div>
+          <div class="contact-row">
+            <a href="https://www.linkedin.com/in/varun-boyapati" rel="noopener">linkedin.com/in/varun-boyapati</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Varun Boyapati · Senior Data Engineer</footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-email');
+  var el = document.getElementById('email');
+  function select() {
+    var r = document.createRange(); r.selectNodeContents(el);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  btn.addEventListener('click', function () {
+    function done(t) { btn.textContent = t; setTimeout(function () { btn.textContent = 'Copy'; }, 1800); }
+    try {
+      navigator.clipboard.writeText(el.textContent).then(function () { done('Copied'); }, function () { select(); done('Selected'); });
+    } catch (e) { select(); done('Selected'); }
+  });
+})();
+</script>
+
+</body>
+</html>
